@@ -24,15 +24,20 @@ Hospitals and clinics face a persistent challenge: patients often book the wrong
 - Point 5
 
 #### Interview 2 (ajavon-woodey)
-**Role:** Role
-**Date:** x Oct 2026
-**Duration:** ~20 minutes
+**Role:** Patient with ankle injury
+**Date:**  11 Oct 2026
+**Duration:** 25 minutes
 **Notes:**  
-- Point 1
-- Point 2
-- Point 3
-- Point 4
-- Point 5
+- Point 1 : 
+    Twisted his ankle playing football; unsure whether it was a simple sprain or needed an X-ray or a specialist.
+- Point 2 :
+    Did not know whether to go to his GP, a sports doctor or the emergency department; asked a teammate and searched online, then chose his GP. The uncertainty makes him tempted to go straight to A&E.
+- Point 3 : 
+    Online symptom searches helped him prepare questions but listed many possible causes and made him more uncertain.
+- Point 4 : 
+    Would trust an app that asks simple questions, explains its recommendation, admits uncertainty and sends him to urgent care when needed; would distrust a confident diagnosis or one that pushes a specific provider.
+- Point 5 : 
+    Would not pay a subscription: expects the service to be free, offered by a hospital, mutuality or insurer → the patient is the user, not the payer.
 
 ### 4. Existing Alternatives
 - **Manual triage by reception staff:** Accurate but slow, costly, and limited to office hours.  
