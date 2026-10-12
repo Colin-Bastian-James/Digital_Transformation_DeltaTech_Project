@@ -13,9 +13,9 @@ Hospitals and clinics face a persistent challenge: patients often book the wrong
 ### 3. Interview Notes
 
 #### Interview 1 (marique-gabriel)
-**Role:** Role
-**Date:** x Oct 2026
-**Duration:** ~25 minutes
+**Role:** patient access manager receptionist
+**Date:** 03 Oct 2026
+**Duration:** 15 minutes
 **Notes:**  
 - Point 1 :
     **Misrouting costs the hospital, not only the patient.** Saturated phone lines, wasted consultation slots and avoidable emergency visits.
@@ -29,7 +29,7 @@ Hospitals and clinics face a persistent challenge: patients often book the wrong
 
 - Point 5 :
     **User and customer are different.** Patients use the tool; the hospital or public health authorities would pay, and the purchase involves several decision-makers.
-    
+
 #### Interview 2 (ajavon-woodey)
 **Role:** Patient with ankle injury
 **Date:**  11 Oct 2026
