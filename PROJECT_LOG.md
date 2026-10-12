@@ -17,12 +17,19 @@ Hospitals and clinics face a persistent challenge: patients often book the wrong
 **Date:** x Oct 2026
 **Duration:** ~25 minutes
 **Notes:**  
-- Point 1
-- Point 2
-- Point 3
-- Point 4
-- Point 5
+- Point 1 :
+    **Misrouting costs the hospital, not only the patient.** Saturated phone lines, wasted consultation slots and avoidable emergency visits.
+- Point 2 :
+    **There is an orientation gap.** Front-desk staff cannot give medical advice, which leaves patients between "call the hospital" and "see your GP".
 
+- Point 3 :
+    **The tool must respect the referral path.** Sending patients to specialists without the required prescription shifts work to the hospital instead of removing it.
+- Point 4 :
+    **Adoption requires trust and compliance.** Physician validation, emergency handling, GDPR compliance and clear liability are preconditions.
+
+- Point 5 :
+    **User and customer are different.** Patients use the tool; the hospital or public health authorities would pay, and the purchase involves several decision-makers.
+    
 #### Interview 2 (ajavon-woodey)
 **Role:** Patient with ankle injury
 **Date:**  11 Oct 2026
