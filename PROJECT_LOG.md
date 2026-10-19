@@ -56,3 +56,75 @@ For patients who struggle to choose the correct medical appointment, DeltaTech T
 
 ### 6. Why AI (≤80 words)
 AI enables fast, accurate interpretation of patient‑described symptoms, something difficult for rule‑based systems. Without AI, triage would require manual staff intervention or rigid questionnaires that fail to capture nuance. AI allows natural language input, adapts to varied symptom descriptions, and provides reliable recommendations at scale. It reduces administrative load and improves patient flow in ways traditional systems cannot.
+
+
+## 2026-10-19 — M2: Technology exploration and project proposal
+
+### 1. Two candidate approaches compared
+| Criterion | A. API model: gpt-4o-mini (OpenAI) | B. Local model: llama3.2 3B (Ollama) |
+|---|---|---|
+| Output quality | Not measured (no API key yet). Larger model, expected to handle subtle red flags better. | Measured: 9/12 appointment type, 7/12 urgency, 1/4 emergencies missed. |
+| Cost per triage | ≈ $0.000074, i.e. ≈ $0.07 per 1,000 triages | $0 per request. Fixed cost instead: a server to run the model once deployed. |
+| Latency | Not measured; published ≈ 0.6 s to first token | Measured on laptop CPU: 7.1 s median, 8.3 s worst |
+| Data needed | No training data, only the prompt | No training data, only the prompt |
+| Failure modes | Outages and rate limits; health data (GDPR special category) leaves our system and is sent to an external provider | Misses subtle emergencies, over-triages; slow on weak hardware |
+| Vendor lock-in | Medium: OpenAI-specific API and pricing | Low: open weights, model swappable with `--model` |
+
+### 2. Experiment
+- **Location:** `experiment/` (script, 12 test cases, run instructions in `experiment/README.md`, raw results in `experiment/results/`).
+- **Task:** recommend an appointment type (EMERGENCY, OUT_OF_HOURS_GP, GP, SPECIALIST, SELF_CARE, NEEDS_MORE_INFO) and urgency for 12 fictional patient messages.
+- **Result (llama3.2, 2026-10-19):** 9/12 correct appointment type, 7/12 correct urgency, 1/4 emergencies missed, 0 invalid outputs, median latency 7.1 s.
+- **Sample outputs and commentary:** see `experiment/RESULTS.md` (case 3 correct, case 10 missed emergency, case 12 does not ask for more information).
+
+### 3. Chosen approach, limitations, switch conditions
+- **Chosen approach:** B. Local model (llama3.2 3B via Ollama), with a rule-based red-flag layer in front of it.
+- **Why:** patient symptoms are health data, a GDPR special category. With a local model, no patient message leaves our system, which removes the main legal and trust barrier for a hospital customer. Vendor lock-in stays low (open weights, model swappable).
+- **Not chosen for cost:** at our measured token counts the API is cheaper per triage until very high volumes (see §5).
+
+**Three limitations**
+1. **Missed emergencies:** 1/4 emergencies missed in the experiment. Mitigation for the MVP: hard-coded red-flag rules (chest pain, breathing difficulty, stroke signs → EMERGENCY / call 112) run before the model, so the model can never downgrade them.
+2. **Latency:** 7.1 s median on a laptop CPU, and slower with several users at once. Production needs a dedicated server, possibly with a GPU.
+3. **Limited quality and languages:** a 3B model struggles with vague descriptions (7/12 correct urgency), and Luxembourgish is not supported.
+
+**What would make us switch to an API model**
+- After adding the red-flag rules, the local model still misses an emergency on an extended test set (≥ 20 cases).
+- Median latency above 10 s with real test users.
+- A provider offers EU-only processing with a data processing agreement acceptable to a hospital.
+
+### 4. Architecture sketch
+- **Image:** `docs/Architecture-M2.png` (source: `docs/architecture-m2.mmd`).
+- **Flow:** patient web page → Python backend → red-flag rules → if no red flag, Ollama server (llama3.2 3B) with the prompt from `prompts/triage.txt` → appointment type, urgency and reason back to the patient.
+- **Secrets and config:** `.env`, git-ignored; `.env.example` committed.
+- **Data boundary:** everything runs on our server; no patient data is sent to a third party.
+
+### 5. Cost estimate
+gpt-4o-mini, OpenAI list price checked 2026-10-19: $0.15 / 1M input tokens, $0.60 / 1M output tokens.
+- 308 input tokens × $0.15 / 1,000,000 = $0.0000462
+- 46 output tokens × $0.60 / 1,000,000 = $0.0000276
+- **Total per triage = $0.0000738** (token counts measured in the experiment)
+
+**Model update** : `gpt-4o-mini` is deprecated; the snapshot `gpt-4o-mini-2024-07-18` shuts down on 14 Jan 2027. OpenAI's recommended replacement is `gpt-6-luna`, list price checked 2026-10-19: $0.10 / 1M input, $0.50 / 1M output.
+- 308 input tokens × $0.10 / 1,000,000 = $0.0000308
+- 46 output tokens × $0.50 / 1,000,000 = $0.0000230
+- **Total per triage = $0.0000538**
+
+**Local option, chosen** : no per-request cost, fixed server cost instead.
+- Hetzner Cloud CPX32 (4 vCPU, 8 GB RAM, EU), price read from Hetzner's price API on 2026-10-07: **€35.99 / month**. 8 GB leaves room for llama3.2 3B (≈ 3–4 GB) plus the backend.
+- At 1,000 triages / month: €35.99 / 1,000 = **≈ €0.036 per triage**
+- Break-even vs gpt-6-luna: 35.99 / 0.0000538 = **≈ 670,000 triages / month** (treating € ≈ $ for an order of magnitude)
+- Conclusion: the local model costs more at low volume; we accept this in exchange for keeping health data in-house.
+
+### 6. Plan to the MVP
+**Our MVP plan runs until 16 Nov:**
+- By 26 Oct: Basic web UI for symptom input (Gabriel Marique)
+- By 26 Oct: Backend endpoint calling the local llama3.2 model (Woodey Ajavon)
+- By 02 Nov: Implement red‑flag rule layer and connect it to the triage flow (Woodey Ajavon)
+- By 09 Nov: Test with ≥20 symptom cases and refine prompts (Gabriel Marique + Bastian-James Colin)
+- By 16 Nov: Prepare demo scenario, example cases, and running MVP for M3 (whole team)
+
+### 7. Repository
+Repository created, README skeleton in place, `.env.example` committed, `.env` git-ignored.
+
+### Notes on M1 to address in the final package
+- Interview 1 lasted 15 min; the spec asks for about 20–30 min. Consider one additional, longer interview.
+- "Around 90% use digital appointment systems yearly" needs a source and date.
