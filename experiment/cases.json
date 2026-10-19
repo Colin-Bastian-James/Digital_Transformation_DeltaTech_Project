@@ -1,0 +1,14 @@
+[
+  {"id": 1, "symptoms": "Crushing chest pain spreading to my left arm for 20 minutes, I'm sweating and short of breath. I'm 58.", "expected_type": "EMERGENCY", "expected_urgency": "emergency", "note": "Possible heart attack"},
+  {"id": 2, "symptoms": "My right arm and the right side of my face suddenly feel weak and my speech is slurred. It started half an hour ago.", "expected_type": "EMERGENCY", "expected_urgency": "emergency", "note": "Possible stroke"},
+  {"id": 3, "symptoms": "I twisted my ankle playing football yesterday. It's swollen and painful but I can still walk on it a bit. Not sure if I need an X-ray.", "expected_type": "GP", "expected_urgency": "same-day", "note": "From interview 2: GP can examine and prescribe an X-ray"},
+  {"id": 4, "symptoms": "I heard a crack when I fell, my ankle looks bent the wrong way and I can't put any weight on it at all.", "expected_type": "EMERGENCY", "expected_urgency": "emergency", "note": "Likely fracture or dislocation"},
+  {"id": 5, "symptoms": "Itchy red patches on both elbows for three weeks, flaky skin, no fever. I'd like to see a dermatologist.", "expected_type": "GP", "expected_urgency": "routine", "note": "Referral path: GP first, not straight to specialist"},
+  {"id": 6, "symptoms": "My GP diagnosed eczema and gave me a referral letter for a dermatologist. Where should I book?", "expected_type": "SPECIALIST", "expected_urgency": "routine", "note": "Referral already exists"},
+  {"id": 7, "symptoms": "It's Saturday night, my GP is closed. I've had a fever of 39.5 and a very sore throat since this morning, I can still swallow and breathe fine.", "expected_type": "OUT_OF_HOURS_GP", "expected_urgency": "same-day", "note": "Maison medicale de garde, not the emergency room"},
+  {"id": 8, "symptoms": "Runny nose, mild sore throat and sneezing for two days. No fever, I feel okay otherwise.", "expected_type": "SELF_CARE", "expected_urgency": "routine", "note": "Common cold, pharmacist advice is enough"},
+  {"id": 9, "symptoms": "Heartburn after most meals for two months, sometimes a sour taste in my mouth.", "expected_type": "GP", "expected_urgency": "routine", "note": "Chronic but not urgent"},
+  {"id": 10, "symptoms": "Sudden flashes of light and a dark curtain coming down over part of my vision in one eye, started an hour ago.", "expected_type": "EMERGENCY", "expected_urgency": "emergency", "note": "Possible retinal detachment"},
+  {"id": 11, "symptoms": "I need my blood pressure prescription renewed, I feel fine.", "expected_type": "GP", "expected_urgency": "routine", "note": "Administrative"},
+  {"id": 12, "symptoms": "I just don't feel well.", "expected_type": "NEEDS_MORE_INFO", "expected_urgency": "routine", "note": "Too vague: the tool should ask, not guess (interview 2: admit uncertainty)"}
+]
