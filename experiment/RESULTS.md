@@ -31,7 +31,7 @@ The model over-triages: routine cases often come back as "same-day" and a common
 | Cost per triage | ≈ $0.000074 (see arithmetic below), i.e. ≈ $0.07 per 1,000 triages | $0 per request. Fixed cost instead: a server to run the model once deployed. |
 | Latency | Not measured; published ≈ 0.6 s to first token | Measured on laptop CPU: 7.1 s median, 8.3 s worst |
 | Data needed | No training data, only the prompt | No training data, only the prompt |
-| Failure modes | Outages and rate limits; patient symptoms (health data, GDPR special category) leave our system and go to a US provider | Misses subtle emergencies, over-triages; slow on weak hardware |
+| Failure modes | Outages and rate limits; patient symptoms (health data, GDPR special category) leave our system and are sent to an external provider | Misses subtle emergencies, over-triages; slow on weak hardware |
 | Vendor lock-in | Medium: OpenAI-specific API and pricing can change | Low: open weights, any Ollama model can be swapped with `--model` |
 
 **Cost arithmetic (gpt-4o-mini, OpenAI list price checked 2026-10-19: $0.15 / 1M input tokens, $0.60 / 1M output tokens):**
