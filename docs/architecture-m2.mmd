@@ -1,0 +1,17 @@
+flowchart LR
+  P[Patient<br/>web page] -->|symptoms text| B[Backend<br/>Python]
+  B --> R{Red-flag rules<br/>chest pain, breathing...}
+  R -->|red flag| E[EMERGENCY<br/>call 112]
+  R -->|no red flag| L[Ollama server<br/>llama3.2 3B]
+  PR[prompts/triage.txt] -.-> L
+  L -->|appointment type + urgency + reason| B
+  E --> B
+  B -->|recommendation + explanation| P
+  ENV[.env config<br/>git-ignored] -.-> B
+  subgraph Our server - no patient data leaves it
+    B
+    R
+    L
+    PR
+    ENV
+  end
