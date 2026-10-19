@@ -22,3 +22,20 @@ Raw output: `results/ollama_llama3.2.json`.
 
 ## Overall pattern
 The model over-triages: routine cases often come back as "same-day" and a common cold (case 8) was sent to a GP instead of self-care. Over-triage is the safe direction to be wrong, but it wastes appointment slots, which is the problem our product claims to solve. The 3B model is fast and free to run, but its accuracy is borderline for a health use case.
+
+## Comparison of the two approaches
+
+| Criterion | A. API model: gpt-4o-mini (OpenAI) | B. Local model: llama3.2 3B (Ollama) |
+|---|---|---|
+| Output quality | Not measured (no API key yet). Larger model, expected to handle subtle red flags better. | Measured: 9/12 appointment type, 7/12 urgency, 1/4 emergencies missed. |
+| Cost per triage | ≈ $0.000074 (see arithmetic below), i.e. ≈ $0.07 per 1,000 triages | $0 per request. Fixed cost instead: a server to run the model once deployed. |
+| Latency | Not measured; published ≈ 0.6 s to first token | Measured on laptop CPU: 7.1 s median, 8.3 s worst |
+| Data needed | No training data, only the prompt | No training data, only the prompt |
+| Failure modes | Outages and rate limits; patient symptoms (health data, GDPR special category) leave our system and go to a US provider | Misses subtle emergencies, over-triages; slow on weak hardware |
+| Vendor lock-in | Medium: OpenAI-specific API and pricing can change | Low: open weights, any Ollama model can be swapped with `--model` |
+
+**Cost arithmetic (gpt-4o-mini, OpenAI list price checked 2026-10-19: $0.15 / 1M input tokens, $0.60 / 1M output tokens):**
+- 308 input tokens × $0.15 / 1,000,000 = $0.0000462
+- 46 output tokens × $0.60 / 1,000,000 = $0.0000276
+- Total per triage = **$0.0000738**
+- Token counts are the averages measured in this experiment.
