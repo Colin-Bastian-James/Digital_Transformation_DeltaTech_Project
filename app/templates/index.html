@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeltaTech Triage</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main>
+    <h1>Which appointment do I need?</h1>
+    <p class="muted">Describe your symptoms. We suggest the right type of appointment. This is not a medical diagnosis.</p>
+
+    <form method="post">
+      <label for="symptoms">Describe your symptoms</label>
+      <textarea id="symptoms" name="symptoms" rows="6"
+        placeholder="Example: I twisted my ankle yesterday, it is swollen and I can barely walk.">{{ symptoms }}</textarea>
+      <button type="submit">Get recommendation</button>
+    </form>
+
+    {% if warning %}
+      <p class="warning">{{ warning }}</p>
+    {% endif %}
+
+    {% if result %}
+      <section class="result {{ result.appointment_type }}">
+        <h2>{{ labels[result.appointment_type] }}</h2>
+        <p><strong>When:</strong> {{ urgency.get(result.urgency, '-') }}
+           · <strong>Confidence:</strong> {{ result.confidence }}</p>
+        <p><strong>Why:</strong> {{ result.reason }}</p>
+      </section>
+    {% endif %}
+  </main>
+</body>
+</html>
