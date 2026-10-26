@@ -6,6 +6,8 @@ then open http://localhost:5000
 """
 from flask import Flask, render_template, request
 
+from triage import get_triage
+
 app = Flask(__name__)
 
 LABELS = {
@@ -22,32 +24,6 @@ URGENCY = {
     "same-day": "Today",
     "routine": "In the next days",
 }
-
-
-def get_triage(symptoms: str) -> dict:
-    """Return the recommendation for a symptom description.
-
-    TODO (Woodey): replace the placeholder below with the real backend:
-    red-flag rules first, then the call to Ollama (llama3.2) with prompts/triage.txt.
-    Keep the same return format:
-        {"appointment_type": "GP", "urgency": "same-day",
-         "confidence": "medium", "reason": "one short sentence"}
-
-    PLACEHOLDER ONLY: simple keyword rules so the interface can be shown.
-    This is not the AI and must not be used in the M3 demo.
-    """
-    t = symptoms.lower()
-    if any(w in t for w in ("chest pain", "slurred", "can't breathe", "vision")):
-        return {"appointment_type": "EMERGENCY", "urgency": "emergency", "confidence": "high",
-                "reason": "These symptoms can be a sign of a serious condition."}
-    if any(w in t for w in ("runny nose", "sneez", "cold")):
-        return {"appointment_type": "SELF_CARE", "urgency": "routine", "confidence": "medium",
-                "reason": "This sounds like a common cold."}
-    if len(t.split()) < 6:
-        return {"appointment_type": "NEEDS_MORE_INFO", "urgency": "routine", "confidence": "low",
-                "reason": "Your message is too short to make a safe suggestion."}
-    return {"appointment_type": "GP", "urgency": "same-day", "confidence": "medium",
-            "reason": "A GP can examine you and refer you if needed."}
 
 
 @app.route("/", methods=["GET", "POST"])
