@@ -1,0 +1,122 @@
+{
+  "summary": {
+    "pipeline": "red flags + llama3.2 (MVP)",
+    "date": "2026-11-02",
+    "appointment_type_accuracy": "10/12",
+    "missed_emergencies": "0/4",
+    "caught_by_red_flags": 4,
+    "fallbacks": 0,
+    "median_latency_s": 4.75,
+    "worst_latency_s": 14.76
+  },
+  "cases": [
+    {
+      "id": 1,
+      "expected": "EMERGENCY",
+      "got": "EMERGENCY",
+      "source": "red_flag",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 0.0
+    },
+    {
+      "id": 2,
+      "expected": "EMERGENCY",
+      "got": "EMERGENCY",
+      "source": "red_flag",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 0.0
+    },
+    {
+      "id": 3,
+      "expected": "GP",
+      "got": "GP",
+      "source": "model",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 14.76
+    },
+    {
+      "id": 4,
+      "expected": "EMERGENCY",
+      "got": "EMERGENCY",
+      "source": "red_flag",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 0.0
+    },
+    {
+      "id": 5,
+      "expected": "GP",
+      "got": "GP",
+      "source": "model",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 5.43
+    },
+    {
+      "id": 6,
+      "expected": "SPECIALIST",
+      "got": "SPECIALIST",
+      "source": "model",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 4.83
+    },
+    {
+      "id": 7,
+      "expected": "OUT_OF_HOURS_GP",
+      "got": "OUT_OF_HOURS_GP",
+      "source": "model",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 5.28
+    },
+    {
+      "id": 8,
+      "expected": "SELF_CARE",
+      "got": "GP",
+      "source": "model",
+      "type_ok": false,
+      "missed_emergency": false,
+      "latency_s": 4.69
+    },
+    {
+      "id": 9,
+      "expected": "GP",
+      "got": "GP",
+      "source": "model",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 5.01
+    },
+    {
+      "id": 10,
+      "expected": "EMERGENCY",
+      "got": "EMERGENCY",
+      "source": "red_flag",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 0.0
+    },
+    {
+      "id": 11,
+      "expected": "GP",
+      "got": "GP",
+      "source": "model",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 4.81
+    },
+    {
+      "id": 12,
+      "expected": "NEEDS_MORE_INFO",
+      "got": "GP",
+      "source": "model",
+      "type_ok": false,
+      "missed_emergency": false,
+      "latency_s": 4.58
+    }
+  ]
+}

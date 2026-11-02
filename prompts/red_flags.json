@@ -1,0 +1,100 @@
+{
+  "_about": "Emergency red flags checked BEFORE the model (app/red_flags.py). If one matches, the answer is always EMERGENCY / call 112. Patterns are regular expressions, matched case-insensitively on text without accents, in English and French. Sources: NHS 111 'Check it's not an emergency' (111.nhs.uk/triage/check-its-not-an-emergency) and Guichet.lu 'Appel d'urgence 112' (guichet.public.lu, updated 06.11.2024), both checked 2026-11-02.",
+  "flags": [
+    {
+      "id": "chest_pain",
+      "reason": "Chest pain or pressure can be a sign of a heart attack.",
+      "patterns": [
+        "chest\\W+(\\w+\\W+){0,2}(pain|pressure|tightness|heaviness|hurts?)",
+        "(pain|pressure|tightness|heaviness|squeezing)\\W+(\\w+\\W+){0,3}chest",
+        "douleurs?\\W+(\\w+\\W+){0,2}(thoracique|poitrine)",
+        "(mal|serre|oppression|pression)\\W+(\\w+\\W+){0,3}(poitrine|thorax)"
+      ]
+    },
+    {
+      "id": "stroke",
+      "reason": "Weakness on one side, a drooping face or slurred speech can be signs of a stroke.",
+      "patterns": [
+        "slurred|face\\W+(\\w+\\W+){0,2}(drooping|dropping|numb|weak)",
+        "(weak|numb|paraly\\w+)\\W+(\\w+\\W+){0,4}(one side|left side|right side|arm|leg|face)",
+        "(can'?t|cannot|unable to)\\W+(\\w+\\W+){0,2}(speak|talk|lift (my )?arm)",
+        "paralys\\w+|visage\\W+(\\w+\\W+){0,2}(paralyse|tombe|engourdi)",
+        "(du mal|difficulte\\w*)\\W+(a|de)\\W+(parler|articuler)|parole\\W+(\\w+\\W+){0,2}(confuse|pateuse|difficile)"
+      ]
+    },
+    {
+      "id": "breathing",
+      "reason": "Severe difficulty breathing or choking needs emergency care.",
+      "patterns": [
+        "(can'?t|cannot|struggling to|unable to|hard to)\\W+breathe",
+        "(very|severely|extremely) short of breath|short(ness)? of breath at rest|difficulty breathing|choking|gasping",
+        "(du mal|difficulte\\w*)\\W+(a|de)\\W+respirer|n'?arrive (pas|plus) a respirer|etouff\\w+|essouffl\\w+ au repos"
+      ]
+    },
+    {
+      "id": "unconscious_seizure",
+      "reason": "Loss of consciousness or a seizure needs emergency care.",
+      "patterns": [
+        "unconscious|passed out|fainted|not waking up|can'?t be woken|seizure|convuls\\w+|(having|had) a fit",
+        "inconscient\\w*|evanoui\\w*|perdu connaissance|ne reagit (pas|plus)|crise d'?epilepsie|convulsion\\w*"
+      ]
+    },
+    {
+      "id": "heavy_bleeding",
+      "reason": "Heavy or uncontrollable bleeding needs emergency care.",
+      "patterns": [
+        "(heavy|heavily|severe|uncontrollable|won'?t stop|not stopping)\\W+(\\w+\\W+){0,2}bleed\\w*|bleed\\w*\\W+(\\w+\\W+){0,3}(won'?t|doesn'?t|will not) stop",
+        "saign\\w+\\W+(\\w+\\W+){0,3}(abondant\\w*|beaucoup|incontrolable\\w*|ne s'?arrete pas)|hemorragie"
+      ]
+    },
+    {
+      "id": "sudden_vision_loss",
+      "reason": "Sudden loss of vision or a dark curtain over your sight needs urgent emergency care.",
+      "patterns": [
+        "curtain\\W+(\\w+\\W+){0,6}(vision|eye|sight)",
+        "(lost|losing|loss of)\\W+(\\w+\\W+){0,2}(vision|sight)|suddenly\\W+(\\w+\\W+){0,2}(can'?t see|blind)|went blind",
+        "perte\\W+(\\w+\\W+){0,2}(vue|vision)|voile noir|ne vois plus|(soudain\\w*|brutal\\w*)\\W+(\\w+\\W+){0,3}(aveugle|vue)"
+      ]
+    },
+    {
+      "id": "allergic_swelling",
+      "reason": "Sudden swelling of the lips, tongue or throat can be a severe allergic reaction.",
+      "patterns": [
+        "(swollen|swelling)\\W+(\\w+\\W+){0,3}(lips?|tongue|throat|mouth)|(lips?|tongue|throat)\\W+(\\w+\\W+){0,2}(swollen|swelling)|anaphyla\\w+",
+        "(gonfl\\w+|enfl\\w+)\\W+(\\w+\\W+){0,3}(levres?|langue|gorge)|(levres?|langue|gorge)\\W+(\\w+\\W+){0,2}(gonfl\\w+|enfl\\w+)|oedeme de quincke"
+      ]
+    },
+    {
+      "id": "suicide_self_harm",
+      "reason": "If you are thinking about ending your life or have hurt yourself, please call 112 now. You are not alone.",
+      "patterns": [
+        "suicid\\w*|kill myself|end my life|self[- ]harm\\w*|hurt(ing)? myself on purpose|harm myself|overdos\\w+",
+        "me suicider|mettre fin a (mes jours|ma vie)|me tuer|me faire du mal"
+      ]
+    },
+    {
+      "id": "childbirth",
+      "reason": "Labour or waters breaking needs immediate care.",
+      "patterns": [
+        "waters? (have )?broken|water broke|in labou?r|contractions?\\W+(\\w+\\W+){0,3}(every|minutes)|baby (is )?coming",
+        "perdu les eaux|poche des eaux|en train d'?accoucher|vais accoucher|contractions?\\W+(\\w+\\W+){0,3}(toutes les|minutes)"
+      ]
+    },
+    {
+      "id": "severe_injury",
+      "reason": "A severe injury, such as a bone that looks out of place, needs emergency care.",
+      "patterns": [
+        "bent the wrong way|bone (is )?sticking out|looks deformed|(just|been) (had a |in a )?(serious |bad |car )?accident|hit by a car",
+        "os qui (sort|depasse)|deform\\w+|(viens|vient) d'?avoir un accident|accident grave|renverse par une voiture"
+      ]
+    },
+    {
+      "id": "sudden_confusion",
+      "reason": "Sudden confusion needs emergency care.",
+      "patterns": [
+        "sudden(ly)?\\W+(\\w+\\W+){0,2}confus\\w+|doesn'?t know (his|her|their|my) (own )?name",
+        "(soudain\\w*|brusque\\w*)\\W+(\\w+\\W+){0,2}confus\\w*|ne sait plus (son|qui)"
+      ]
+    }
+  ]
+}

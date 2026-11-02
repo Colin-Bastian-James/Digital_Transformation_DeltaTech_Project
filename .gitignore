@@ -2,3 +2,5 @@
 .DS_Store
 __pycache__/
 .venv/
+# Triage audit log: contains health data, never commit
+logs/
