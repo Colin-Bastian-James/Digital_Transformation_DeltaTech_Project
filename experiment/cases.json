@@ -10,5 +10,13 @@
   {"id": 9, "symptoms": "Heartburn after most meals for two months, sometimes a sour taste in my mouth.", "expected_type": "GP", "expected_urgency": "routine", "note": "Chronic but not urgent"},
   {"id": 10, "symptoms": "Sudden flashes of light and a dark curtain coming down over part of my vision in one eye, started an hour ago.", "expected_type": "EMERGENCY", "expected_urgency": "emergency", "note": "Possible retinal detachment"},
   {"id": 11, "symptoms": "I need my blood pressure prescription renewed, I feel fine.", "expected_type": "GP", "expected_urgency": "routine", "note": "Administrative"},
-  {"id": 12, "symptoms": "I just don't feel well.", "expected_type": "NEEDS_MORE_INFO", "expected_urgency": "routine", "note": "Too vague: the tool should ask, not guess (interview 2: admit uncertainty)"}
+  {"id": 12, "symptoms": "I just don't feel well.", "expected_type": "NEEDS_MORE_INFO", "expected_urgency": "routine", "note": "Too vague: the tool should ask, not guess (interview 2: admit uncertainty)"},
+  {"id": 13, "symptoms":"I have severe shortness of breath and my lips are turning blue.","expected_type":"EMERGENCY","expected_urgency":"emergency","note":"Critical breathing problem"},
+  {"id": 14, "symptoms":"For three months I have had increasing knee pain when running, but no recent injury.","expected_type":"GP","expected_urgency":"routine","note":"Chronic musculoskeletal issue"},
+  {"id": 15, "symptoms":"My hearing has gradually worsened in my left ear over six months.","expected_type":"GP","expected_urgency":"routine","note":"Referral path starts with GP"},
+  {"id": 16, "symptoms":"I cut my finger while cooking. The bleeding stopped and the wound is small.","expected_type":"SELF_CARE","expected_urgency":"routine","note":"Minor injury"},
+  {"id": 17, "symptoms":"I have a high fever, stiff neck and a severe headache that started this morning.","expected_type":"EMERGENCY","expected_urgency":"emergency","note":"Possible meningitis"},
+  {"id": 18, "symptoms":"My GP has already referred me to an ophthalmologist because my vision is getting worse.","expected_type":"SPECIALIST","expected_urgency":"routine","note":"Referral already exists"},
+  {"id": 19, "symptoms":"I have mild diarrhea since yesterday but I can still drink and eat normally.","expected_type":"SELF_CARE","expected_urgency":"routine","note":"Likely temporary condition"},
+  {"id": 20, "symptoms":"Something hurts but I don't know where or why.","expected_type":"NEEDS_MORE_INFO","expected_urgency":"routine","note":"Too vague to recommend an appointment"}
 ]
