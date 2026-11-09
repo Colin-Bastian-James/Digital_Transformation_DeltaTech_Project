@@ -39,3 +39,21 @@ The model over-triages: routine cases often come back as "same-day" and a common
 - 46 output tokens × $0.60 / 1,000,000 = $0.0000276
 - Total per triage = **$0.0000738**
 - Token counts are the averages measured in this experiment.
+
+## M3 — Extended test set (20 cases) and prompt iteration, 2026-11-09
+
+Pipeline: red-flag rules, then llama3.2 3B via Ollama (`experiment/run_mvp.py`).
+
+| Version | Change | Type correct | Missed emergencies | Wrong cases |
+|---|---|---|---|---|
+| M2 baseline | model only, 12 cases | 9/12 | 1/4 | 5, 8, 10 (missed), 12 |
+| MVP, prompt v1 | red flags + original prompt | 18/20 | 0/6, but cases 13 and 17 caught only by the model | 8, 12 |
+| + red flags | rules for blue lips and meningitis signs (commit 245d966) | 18/20 | **0/6, all 6 caught by rules** | 8, 12 |
+| prompt v2 | explicit criteria for NEEDS_MORE_INFO and SELF_CARE, 2 examples | 18/20 | 0/6 | 12, 19 |
+| **prompt v3 (kept)** | SELF_CARE criteria include mild diarrhoea < 2 days | **19/20** | **0/6** | 15 |
+
+**Limitation found:** with a 3B model, changing one line of the prompt flips unrelated cases (case 12 started passing, case 15 started failing, when only the SELF_CARE line changed). Scores on these 20 cases are therefore noisy, and the prompt is now tuned on them. The examples in the prompt were written to differ from the test cases, but a fair evaluation (M4) needs new held-out cases that were not used for tuning.
+
+**Remaining error:** case 15 (gradual hearing loss) gets NEEDS_MORE_INFO instead of GP. Safe direction: the patient is asked a follow-up question, not sent home.
+
+**Where the cases come from:** cases 1–12 were drafted with an AI assistant (Claude) during M2, three of them based on our M1 interviews (cases 3, 5, 12). Cases 13–20 were added by Bastian-James Colin on 2026-11-08. All are fictional; no real patient data.

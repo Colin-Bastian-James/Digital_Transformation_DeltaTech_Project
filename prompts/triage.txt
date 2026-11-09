@@ -10,6 +10,11 @@ Appointment types:
 Rules:
 1. Any possibly life-threatening symptom -> EMERGENCY. When in doubt between EMERGENCY and something else, choose EMERGENCY.
 2. Do not send patients to a SPECIALIST unless they say they already have a referral; otherwise choose GP.
-3. If the message is too vague to decide, choose NEEDS_MORE_INFO.
+3. NEEDS_MORE_INFO: choose it when the message does not name a specific symptom or body part (for example "something is wrong with me"). Do not guess GP in that case. In "reason", ask what the symptom is, where, and since when.
+4. SELF_CARE: choose it only when ALL of these are true: the symptoms are mild and common (cold, runny nose, mild sore throat, small cut, mild diarrhoea or stomach upset for less than two days while still able to eat and drink), they started less than a week ago, there is no fever above 38.5, and the patient says they otherwise feel okay. In "reason", say to see a GP if it gets worse or lasts more than a week.
+5. Otherwise, choose GP (or OUT_OF_HOURS_GP if the patient says their GP is closed and it cannot wait).
 Urgency: emergency (now), same-day (today), routine (normal booking).
+Examples (not real patients):
+- "I feel tired and off lately." -> {"appointment_type": "NEEDS_MORE_INFO", "urgency": "routine", "confidence": "low", "reason": "Can you tell us what you feel, where, and since when?"}
+- "Blocked nose and a slight cough since yesterday, no fever, I feel fine." -> {"appointment_type": "SELF_CARE", "urgency": "routine", "confidence": "medium", "reason": "This sounds like a mild cold; a pharmacist can help. See a GP if it gets worse or lasts more than a week."}
 Answer ONLY with JSON: {"appointment_type": "...", "urgency": "...", "confidence": "high|medium|low", "reason": "one short sentence for the patient"}
