@@ -26,6 +26,10 @@ MUST_TRIGGER = [
     ("I was just hit by a car and my leg looks deformed", "severe_injury"),
     ("He is having a fit and shaking", "unconscious_seizure"),
     ("My water broke and contractions are every 3 minutes", "childbirth"),
+    # Added 2026-11-09 after a manual UI test was not caught
+    ("my heart stopped beating what should i do", "cardiac_arrest_heart_attack"),
+    ("I think I am having a heart attack", "cardiac_arrest_heart_attack"),
+    ("My husband collapsed and he is not breathing", "cardiac_arrest_heart_attack"),
     # Added 2026-11-09 (extended test set, cases 13 and 17)
     ("I have severe shortness of breath and my lips are turning blue.", "breathing"),
     ("My baby's lips look blue", "breathing"),
@@ -41,6 +45,8 @@ MUST_TRIGGER = [
     ("J'ai les lèvres et la langue gonflées", "allergic_swelling"),
     ("J'ai de la fièvre et la nuque raide depuis ce matin", "meningitis_signs"),
     ("Ses lèvres deviennent bleues", "breathing"),
+    ("Mon père fait une crise cardiaque", "cardiac_arrest_heart_attack"),
+    ("Son coeur s'est arrêté", "cardiac_arrest_heart_attack"),
 ]
 
 MUST_NOT_TRIGGER = [
@@ -62,6 +68,10 @@ MUST_NOT_TRIGGER = [
     "I have a fever and a sore throat since yesterday",
     "My fingers turn white and blue in the cold",
     "J'ai un peu de fièvre et mal à la tête",
+    "My heart races when I drink coffee",
+    "He is not breathing well through his nose because of a cold",
+    "Il ne respire pas bien par le nez",
+    "My grandfather had a heart attack ten years ago, I want a check-up",
 ]
 
 

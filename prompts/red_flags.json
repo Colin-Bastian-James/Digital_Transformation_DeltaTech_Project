@@ -1,6 +1,16 @@
 {
-  "_about": "Emergency red flags checked BEFORE the model (app/red_flags.py). If one matches, the answer is always EMERGENCY / call 112. Patterns are regular expressions, matched case-insensitively on text without accents, in English and French. Sources: NHS 111 'Check it's not an emergency' (111.nhs.uk/triage/check-its-not-an-emergency) and Guichet.lu 'Appel d'urgence 112' (guichet.public.lu, updated 06.11.2024), both checked 2026-11-02. Meningitis and blue-lips rules added 2026-11-09 after cases 13 and 17 of the extended test set were only caught by the model; source: NHS 'Meningitis' symptoms page (nhs.uk/conditions/meningitis).",
+  "_about": "Emergency red flags checked BEFORE the model (app/red_flags.py). If one matches, the answer is always EMERGENCY / call 112. Patterns are regular expressions, matched case-insensitively on text without accents, in English and French. Sources: NHS 111 'Check it's not an emergency' (111.nhs.uk/triage/check-its-not-an-emergency) and Guichet.lu 'Appel d'urgence 112' (guichet.public.lu, updated 06.11.2024), both checked 2026-11-02. Meningitis and blue-lips rules added 2026-11-09 after cases 13 and 17 of the extended test set were only caught by the model; source: NHS 'Meningitis' symptoms page (nhs.uk/conditions/meningitis). Cardiac arrest / heart attack rule added 2026-11-09 after a manual UI test ('my heart stopped beating') was not caught.",
   "flags": [
+    {
+      "id": "cardiac_arrest_heart_attack",
+      "reason": "A heart that has stopped, someone not breathing, or a possible heart attack needs emergency care. Call 112 now.",
+      "patterns": [
+        "heart\\W+(\\w+\\W+){0,2}(stopped|stopping|stops)|cardiac arrest|no pulse|(is|are|he'?s|she'?s) not breathing(?!\\W+(well|properly|through))|stopped breathing",
+        "(having|having a|is having|am having|i'?m having)\\W+(\\w+\\W+){0,1}heart attack|heart attack\\W+(\\w+\\W+){0,2}(now|right now|happening)",
+        "arret cardiaque|coeur\\W+(\\w+\\W+){0,3}(arrete|ne bat plus)|ne respire (plus|pas)(?!\\W+(bien|correctement|par))|plus de pouls",
+        "(fait|fais|faire|en train de faire)\\W+(un |une )?(infarctus|crise cardiaque)"
+      ]
+    },
     {
       "id": "chest_pain",
       "reason": "Chest pain or pressure can be a sign of a heart attack.",
