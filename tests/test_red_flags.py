@@ -26,6 +26,12 @@ MUST_TRIGGER = [
     ("I was just hit by a car and my leg looks deformed", "severe_injury"),
     ("He is having a fit and shaking", "unconscious_seizure"),
     ("My water broke and contractions are every 3 minutes", "childbirth"),
+    # Added 2026-11-09 (extended test set, cases 13 and 17)
+    ("I have severe shortness of breath and my lips are turning blue.", "breathing"),
+    ("My baby's lips look blue", "breathing"),
+    ("I have a high fever, stiff neck and a severe headache", "meningitis_signs"),
+    ("Stiff neck since this morning and now a fever of 39", "meningitis_signs"),
+    ("He has a rash that does not fade when I press a glass on it", "meningitis_signs"),
     # French
     ("J'ai une douleur dans la poitrine qui descend dans le bras gauche", "chest_pain"),
     ("Ma mère a le visage paralysé d'un côté et du mal à parler", "stroke"),
@@ -33,6 +39,8 @@ MUST_TRIGGER = [
     ("D'un coup je ne vois plus rien de l'oeil droit", "sudden_vision_loss"),
     ("Mon fils s'est évanoui et ne réagit pas", "unconscious_seizure"),
     ("J'ai les lèvres et la langue gonflées", "allergic_swelling"),
+    ("J'ai de la fièvre et la nuque raide depuis ce matin", "meningitis_signs"),
+    ("Ses lèvres deviennent bleues", "breathing"),
 ]
 
 MUST_NOT_TRIGGER = [
@@ -50,6 +58,10 @@ MUST_NOT_TRIGGER = [
     "J'ai accouché il y a 3 mois et j'ai mal au dos",
     "I had a car accident last year and my back still hurts",
     "I feel short of breath when climbing stairs",
+    "My neck is stiff because I slept badly",
+    "I have a fever and a sore throat since yesterday",
+    "My fingers turn white and blue in the cold",
+    "J'ai un peu de fièvre et mal à la tête",
 ]
 
 

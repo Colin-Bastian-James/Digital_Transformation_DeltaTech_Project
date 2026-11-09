@@ -1,13 +1,13 @@
 {
   "summary": {
     "pipeline": "red flags + llama3.2 (MVP)",
-    "date": "2026-11-02",
-    "appointment_type_accuracy": "10/12",
-    "missed_emergencies": "0/4",
-    "caught_by_red_flags": 4,
+    "date": "2026-11-09",
+    "appointment_type_accuracy": "18/20",
+    "missed_emergencies": "0/6",
+    "caught_by_red_flags": 6,
     "fallbacks": 0,
-    "median_latency_s": 4.75,
-    "worst_latency_s": 14.76
+    "median_latency_s": 4.68,
+    "worst_latency_s": 15.43
   },
   "cases": [
     {
@@ -35,7 +35,7 @@
       "source": "model",
       "type_ok": true,
       "missed_emergency": false,
-      "latency_s": 14.76
+      "latency_s": 15.43
     },
     {
       "id": 4,
@@ -53,7 +53,7 @@
       "source": "model",
       "type_ok": true,
       "missed_emergency": false,
-      "latency_s": 5.43
+      "latency_s": 5.34
     },
     {
       "id": 6,
@@ -62,7 +62,7 @@
       "source": "model",
       "type_ok": true,
       "missed_emergency": false,
-      "latency_s": 4.83
+      "latency_s": 4.22
     },
     {
       "id": 7,
@@ -71,7 +71,7 @@
       "source": "model",
       "type_ok": true,
       "missed_emergency": false,
-      "latency_s": 5.28
+      "latency_s": 6.33
     },
     {
       "id": 8,
@@ -80,7 +80,7 @@
       "source": "model",
       "type_ok": false,
       "missed_emergency": false,
-      "latency_s": 4.69
+      "latency_s": 4.72
     },
     {
       "id": 9,
@@ -89,7 +89,7 @@
       "source": "model",
       "type_ok": true,
       "missed_emergency": false,
-      "latency_s": 5.01
+      "latency_s": 4.63
     },
     {
       "id": 10,
@@ -107,7 +107,7 @@
       "source": "model",
       "type_ok": true,
       "missed_emergency": false,
-      "latency_s": 4.81
+      "latency_s": 4.72
     },
     {
       "id": 12,
@@ -116,7 +116,79 @@
       "source": "model",
       "type_ok": false,
       "missed_emergency": false,
-      "latency_s": 4.58
+      "latency_s": 3.71
+    },
+    {
+      "id": 13,
+      "expected": "EMERGENCY",
+      "got": "EMERGENCY",
+      "source": "red_flag",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 0.0
+    },
+    {
+      "id": 14,
+      "expected": "GP",
+      "got": "GP",
+      "source": "model",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 4.22
+    },
+    {
+      "id": 15,
+      "expected": "GP",
+      "got": "GP",
+      "source": "model",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 5.19
+    },
+    {
+      "id": 16,
+      "expected": "SELF_CARE",
+      "got": "SELF_CARE",
+      "source": "model",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 6.58
+    },
+    {
+      "id": 17,
+      "expected": "EMERGENCY",
+      "got": "EMERGENCY",
+      "source": "red_flag",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 0.0
+    },
+    {
+      "id": 18,
+      "expected": "SPECIALIST",
+      "got": "SPECIALIST",
+      "source": "model",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 5.55
+    },
+    {
+      "id": 19,
+      "expected": "SELF_CARE",
+      "got": "SELF_CARE",
+      "source": "model",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 5.23
+    },
+    {
+      "id": 20,
+      "expected": "NEEDS_MORE_INFO",
+      "got": "NEEDS_MORE_INFO",
+      "source": "model",
+      "type_ok": true,
+      "missed_emergency": false,
+      "latency_s": 5.19
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "_about": "Emergency red flags checked BEFORE the model (app/red_flags.py). If one matches, the answer is always EMERGENCY / call 112. Patterns are regular expressions, matched case-insensitively on text without accents, in English and French. Sources: NHS 111 'Check it's not an emergency' (111.nhs.uk/triage/check-its-not-an-emergency) and Guichet.lu 'Appel d'urgence 112' (guichet.public.lu, updated 06.11.2024), both checked 2026-11-02.",
+  "_about": "Emergency red flags checked BEFORE the model (app/red_flags.py). If one matches, the answer is always EMERGENCY / call 112. Patterns are regular expressions, matched case-insensitively on text without accents, in English and French. Sources: NHS 111 'Check it's not an emergency' (111.nhs.uk/triage/check-its-not-an-emergency) and Guichet.lu 'Appel d'urgence 112' (guichet.public.lu, updated 06.11.2024), both checked 2026-11-02. Meningitis and blue-lips rules added 2026-11-09 after cases 13 and 17 of the extended test set were only caught by the model; source: NHS 'Meningitis' symptoms page (nhs.uk/conditions/meningitis).",
   "flags": [
     {
       "id": "chest_pain",
@@ -24,11 +24,13 @@
     },
     {
       "id": "breathing",
-      "reason": "Severe difficulty breathing or choking needs emergency care.",
+      "reason": "Severe difficulty breathing, choking or blue lips need emergency care.",
       "patterns": [
         "(can'?t|cannot|struggling to|unable to|hard to)\\W+breathe",
         "(very|severely|extremely) short of breath|short(ness)? of breath at rest|difficulty breathing|choking|gasping",
-        "(du mal|difficulte\\w*)\\W+(a|de)\\W+respirer|n'?arrive (pas|plus) a respirer|etouff\\w+|essouffl\\w+ au repos"
+        "(du mal|difficulte\\w*)\\W+(a|de)\\W+respirer|n'?arrive (pas|plus) a respirer|etouff\\w+|essouffl\\w+ au repos",
+        "(severe|severely|serious)\\W+(\\w+\\W+){0,1}short(ness)? of breath|(lips?|face)\\W+(\\w+\\W+){0,3}(blue|grey|gray)|cyanos\\w+",
+        "(levres?|visage)\\W+(\\w+\\W+){0,3}(bleu\\w*|gris\\w*)|cyanos\\w+"
       ]
     },
     {
@@ -86,6 +88,16 @@
       "patterns": [
         "bent the wrong way|bone (is )?sticking out|looks deformed|(just|been) (had a |in a )?(serious |bad |car )?accident|hit by a car",
         "os qui (sort|depasse)|deform\\w+|(viens|vient) d'?avoir un accident|accident grave|renverse par une voiture"
+      ]
+    },
+    {
+      "id": "meningitis_signs",
+      "reason": "A fever with a stiff neck, or a rash that does not fade when pressed, can be a sign of meningitis.",
+      "patterns": [
+        "(fever|temperature)\\W+(\\w+\\W+){0,8}stiff neck|stiff neck\\W+(\\w+\\W+){0,8}(fever|temperature)",
+        "rash\\W+(\\w+\\W+){0,6}(does ?n'?o?t|won'?t|not) fade|glass test",
+        "fievre\\W+(\\w+\\W+){0,8}nuque raide|nuque raide\\W+(\\w+\\W+){0,8}fievre|raideur (de la|dans la) nuque\\W+(\\w+\\W+){0,8}fievre|fievre\\W+(\\w+\\W+){0,8}raideur (de la|dans la) nuque",
+        "(boutons|taches|eruption)\\W+(\\w+\\W+){0,6}(ne disparai\\w+ pas|ne s'?efface\\w* pas)"
       ]
     },
     {
