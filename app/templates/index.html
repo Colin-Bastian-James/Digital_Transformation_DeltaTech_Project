@@ -7,15 +7,23 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+  <div class="emergency-banner" role="note">
+    In an emergency, call <strong>112</strong> now. Do not wait for this tool.
+  </div>
+
   <main>
     <h1>Which appointment do I need?</h1>
     <p class="muted">Describe your symptoms. We suggest the right type of appointment. This is not a medical diagnosis.</p>
 
-    <form method="post">
+    <form method="post" id="triage-form">
       <label for="symptoms">Describe your symptoms</label>
       <textarea id="symptoms" name="symptoms" rows="6"
         placeholder="Example: I twisted my ankle yesterday, it is swollen and I can barely walk.">{{ symptoms }}</textarea>
-      <button type="submit">Get recommendation</button>
+      <button type="submit" id="submit-btn">Get recommendation</button>
+      <p id="progress" class="progress" role="status" aria-live="polite" hidden>
+        <span class="spinner" aria-hidden="true"></span>
+        Analysing your message. This usually takes 5 to 15 seconds.
+      </p>
     </form>
 
     {% if warning %}
@@ -31,5 +39,18 @@
       </section>
     {% endif %}
   </main>
+
+  <script>
+    // Slow answers (about 5 s, up to 20 s): show progress and block double submits.
+    // After 20 s the backend itself answers with the safe default ("contact your GP").
+    const form = document.getElementById("triage-form");
+    form.addEventListener("submit", (event) => {
+      if (form.symptoms.value.trim().length < 10) return;  // the server shows the warning
+      const button = document.getElementById("submit-btn");
+      button.disabled = true;
+      button.textContent = "Analysing...";
+      document.getElementById("progress").hidden = false;
+    });
+  </script>
 </body>
 </html>

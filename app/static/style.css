@@ -50,3 +50,25 @@ button:hover { background: #174a6d; }
 .result h2 { margin-top: 0; }
 .result.EMERGENCY { border-color: #b42318; }
 .result.NEEDS_MORE_INFO { border-color: #5b6875; }
+
+/* "Call 112" visible on every screen (M2 feedback) */
+.emergency-banner {
+  padding: 10px 16px;
+  background: #b42318;
+  color: #fff;
+  text-align: center;
+}
+
+/* Progress while the model answers (M2 feedback) */
+button:disabled { opacity: 0.7; cursor: progress; }
+.progress { display: flex; align-items: center; gap: 8px; color: #5b6875; }
+.progress[hidden] { display: none; }
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #5b6875;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
