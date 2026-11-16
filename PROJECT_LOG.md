@@ -154,7 +154,7 @@ Results on the 20 test cases (`experiment/run_mvp.py`, details in `experiment/RE
 `docs/Architecture-M3.png` (source `docs/architecture-m3.mmd`).
 
 ### 4. Demo video
-*(Link to add.)*
+Link: https://youtu.be/lXoENMKwZU0
 
 ### 5. Known bugs and limitations
 1. **Misleading message when the model is down.** `app/triage.py` handles a refused connection and a timeout in the same `except`, so when Ollama is not running the patient reads "The assistant did not answer in time" and is sent to the GP. Safe direction, but wrong message; it should say the service is unavailable.
@@ -165,6 +165,9 @@ Results on the 20 test cases (`experiment/run_mvp.py`, details in `experiment/RE
 6. **Cold start (found in the README test on Windows).** The first triage after Ollama starts exceeds the 20 s timeout while the model loads, so it always returns the safe default. Safe, but the first patient never gets a real answer.
 
 ### 6. Who did what since M2
-- **Gabriel Marique:** Flask web interface (symptom input, result, "call 112" banner, progress indicator); ran the 20-case test, added red flags for blue lips, meningitis signs and cardiac arrest (+21 tests), prompt v3, README "How to run", M3 architecture diagram.
-- **Woodey Ajavon:** backend calling llama3.2 via Ollama; red-flag rule engine (EN + FR) before the model, fixed outcome set, safe default, 20 s timeout, audit log, unit tests.
-- **Bastian-James Colin:** extended the test set from 12 to 20 cases; coordination, M3 summary and submission.
+
+- **Gabriel Marique:** frontend development (Flask user interface, emergency banner, progress indicator), prompt refinement (v3), red‑flag testing, evaluation of the extended dataset, architecture update and README improvements.
+
+- **Woodey Ajavon:** backend development, Ollama integration, red‑flag rule engine (English and French), safe defaults, timeout handling, audit logging, automated testing and deployment support.
+
+- **Bastian‑James Colin:** extension of the evaluation dataset from 12 to 20 cases, repository management, milestone documentation, submission preparation, quality assurance and milestone coordination.
