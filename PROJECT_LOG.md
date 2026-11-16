@@ -133,7 +133,11 @@ Repository created, README skeleton in place, `.env.example` committed, `.env` g
 
 ### 1. It runs
 - Setup in 5 steps: README §3 "How to run it" (clone, venv + `pip install -r requirements.txt`, `ollama pull llama3.2`, `python app/app.py`, open http://localhost:5000).
-- Tested on a fresh clone. *(Team: add whose laptop it was tested on, other than the author's.)*
+- Tested on a fresh clone. 
+- Tested on 2026-11-16 by Woodey Ajavon on his own Windows 11 laptop (PowerShell, Python 3.14), on a fresh clone in a new folder, following README §3 to the letter: the app starts and answers correctly (ankle case → GP via the model, 112 banner and progress indicator shown). Issues found:
+  - `python3` does not exist on Windows; `python -m venv .venv` works. README should give both.
+  - In Windows PowerShell, `curl` is an alias of `Invoke-WebRequest` and asks a security question before printing "Ollama is running".
+  - **Cold start:** the first request after starting Ollama took longer than the 20 s timeout (the model is loaded into memory), so the patient got the safe default "contact your GP". The second request answered in ~5 s. Fix for M4: warm up the model when the app starts.
 
 ### 2. AI feature working end to end
 The patient types symptoms in free text and gets an appointment type, urgency and a one-sentence reason. Flow: red-flag rules first (EN + FR, any emergency sign → "go to the emergency department / call 112", the model is never asked), then llama3.2 3B via Ollama with `prompts/triage.txt`. Only a fixed set of outcomes is accepted; anything else, or no answer within 20 s, gives the safe default "contact your GP today". No mocked responses.
@@ -158,6 +162,7 @@ Results on the 20 test cases (`experiment/run_mvp.py`, details in `experiment/RE
 3. **Unstable 3B model.** Changing one prompt line flipped unrelated test cases; case 15 (gradual hearing loss) is still wrong. The prompt was tuned on our 20 cases, so the 19/20 score is optimistic; M4 needs new held-out cases.
 4. **Health data in the audit log.** `logs/triage_log.jsonl` stores the raw symptom text with no retention limit and no access control.
 5. **Speed and scope.** 4–15 s per answer on a laptop CPU; concurrent users not measured. Interface in English only; red flags in English and French only. The API option was compared on published prices only, never run on our cases.
+6. **Cold start (found in the README test on Windows).** The first triage after Ollama starts exceeds the 20 s timeout while the model loads, so it always returns the safe default. Safe, but the first patient never gets a real answer.
 
 ### 6. Who did what since M2
 - **Gabriel Marique:** Flask web interface (symptom input, result, "call 112" banner, progress indicator); ran the 20-case test, added red flags for blue lips, meningitis signs and cardiac arrest (+21 tests), prompt v3, README "How to run", M3 architecture diagram.
