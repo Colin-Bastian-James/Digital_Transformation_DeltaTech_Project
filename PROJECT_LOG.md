@@ -128,3 +128,38 @@ Repository created, README skeleton in place, `.env.example` committed, `.env` g
 ### Notes on M1 to address in the final package
 - Interview 1 lasted 15 min; the spec asks for about 20–30 min. Consider one additional, longer interview.
 - "Around 90% use digital appointment systems yearly" needs a source and date.
+
+## 2026-11-16 — M3: Minimum viable product
+
+### 1. It runs
+- Setup in 5 steps: README §3 "How to run it" (clone, venv + `pip install -r requirements.txt`, `ollama pull llama3.2`, `python app/app.py`, open http://localhost:5000).
+- Tested on a fresh clone. *(Team: add whose laptop it was tested on, other than the author's.)*
+
+### 2. AI feature working end to end
+The patient types symptoms in free text and gets an appointment type, urgency and a one-sentence reason. Flow: red-flag rules first (EN + FR, any emergency sign → "go to the emergency department / call 112", the model is never asked), then llama3.2 3B via Ollama with `prompts/triage.txt`. Only a fixed set of outcomes is accepted; anything else, or no answer within 20 s, gives the safe default "contact your GP today". No mocked responses.
+
+Results on the 20 test cases (`experiment/run_mvp.py`, details in `experiment/RESULTS.md`):
+
+| | M2 (model only) | M3 MVP |
+|---|---|---|
+| Missed emergencies | 1/4 | **0/6, all caught by rules** |
+| Appointment type correct | 9/12 | 19/20 |
+| Median latency (laptop CPU) | 7.1 s | ~5.4 s |
+
+### 3. Architecture diagram
+`docs/Architecture-M3.png` (source `docs/architecture-m3.mmd`).
+
+### 4. Demo video
+*(Link to add.)*
+
+### 5. Known bugs and limitations
+1. **Misleading message when the model is down.** `app/triage.py` handles a refused connection and a timeout in the same `except`, so when Ollama is not running the patient reads "The assistant did not answer in time" and is sent to the GP. Safe direction, but wrong message; it should say the service is unavailable.
+2. **Red-flag rules are keyword-based.** In one week of testing we found three emergency phrasings they missed (blue lips, fever with stiff neck, "my heart stopped beating"); all are fixed and tested, but coverage of other phrasings is unknown.
+3. **Unstable 3B model.** Changing one prompt line flipped unrelated test cases; case 15 (gradual hearing loss) is still wrong. The prompt was tuned on our 20 cases, so the 19/20 score is optimistic; M4 needs new held-out cases.
+4. **Health data in the audit log.** `logs/triage_log.jsonl` stores the raw symptom text with no retention limit and no access control.
+5. **Speed and scope.** 4–15 s per answer on a laptop CPU; concurrent users not measured. Interface in English only; red flags in English and French only. The API option was compared on published prices only, never run on our cases.
+
+### 6. Who did what since M2
+- **Gabriel Marique:** Flask web interface (symptom input, result, "call 112" banner, progress indicator); ran the 20-case test, added red flags for blue lips, meningitis signs and cardiac arrest (+21 tests), prompt v3, README "How to run", M3 architecture diagram.
+- **Woodey Ajavon:** backend calling llama3.2 via Ollama; red-flag rule engine (EN + FR) before the model, fixed outcome set, safe default, 20 s timeout, audit log, unit tests.
+- **Bastian-James Colin:** extended the test set from 12 to 20 cases; coordination, M3 summary and submission.

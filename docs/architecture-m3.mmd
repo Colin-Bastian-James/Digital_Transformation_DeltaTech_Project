@@ -1,0 +1,39 @@
+flowchart TB
+  U["Patient browser<br/>symptom form · 'call 112' banner · progress indicator"]
+
+  subgraph SYS["OUR SERVER — no patient data leaves this boundary, no external API is called"]
+    A["Flask web app<br/>app/app.py · templates/index.html"]
+    T["Triage service<br/>app/triage.py"]
+    R{"Red-flag rules<br/>app/red_flags.py · EN + FR"}
+    O["Ollama (local)<br/>model llama3.2:3b"]
+    V{"Output check<br/>6 allowed outcomes"}
+    E["EMERGENCY<br/>go to the emergency dept / call 112"]
+    S["Safe default<br/>'contact your GP today'"]
+
+    subgraph FILES["Prompts, configuration, data store"]
+      direction LR
+      RF[("prompts/red_flags.json<br/>rules + sources")]
+      PR[("prompts/triage.txt<br/>system prompt v3")]
+      CFG[("env vars OLLAMA_URL, OLLAMA_MODEL<br/>.env git-ignored · .env.example committed<br/>no secrets needed (local model)")]
+      LOG[("logs/triage_log.jsonl · git-ignored<br/>audit log: input, output, model,<br/>prompt and rule versions")]
+    end
+  end
+
+  U -->|"symptoms (free text)"| A
+  A --> T
+  T --> R
+  R -->|"red flag"| E
+  R -->|"no red flag"| O
+  O -->|"JSON answer"| V
+  O -.->|"no answer in 20 s / unavailable"| S
+  V -->|"invalid"| S
+  V -->|"valid: type, urgency, reason"| T
+  E --> T
+  S --> T
+  T -->|"recommendation"| A
+  A -->|"result page"| U
+
+  RF -.-> R
+  PR -.-> O
+  CFG -.-> T
+  T -->|"every triage"| LOG
